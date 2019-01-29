@@ -54,5 +54,20 @@ public class App
          * Create data using JDBC INSERT
          * **/
         empDao.addEmployee(104, "Narendra", 37000);
+        System.out.println("");
+        
+        /*
+         * Call MYSQL STORE PROCEDURE
+         * **/
+        List<Employee> employeeList3 = empDao.getAllEmployee();
+        System.out.println("Call MYSQL STORE PROCEDURE");
+        System.out.println("==========================");
+        
+        for(Employee emp3 : employeeList3) {
+        	System.out.println("ID: "+emp3.getId());
+        	System.out.println("Name: "+emp3.getName());
+        	System.out.println("Salary: "+emp3.getSalary());
+        	System.out.println("");
+        }
     }
 }

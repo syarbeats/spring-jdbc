@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.learning.spring.jdbc_template.EmployeeMapper;
@@ -77,6 +78,19 @@ public class EmployeeDAO {
 		
 		return false;
 	}
+	
+	/*
+	 * SPRING JDBC - CALL MYSQL STORE PROCEDURE
+	 * **/
+	@SuppressWarnings("unchecked")
+	public List<Employee> getAllEmployee(){
+		
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate.getDataSource()).withProcedureName("getAllEmployee").returningResultSet("emp", new EmployeeMapper());        
+		Map<String, Object> queryData = jdbcCall.execute();		
+        
+		return (List<Employee>) queryData.get("emp");
+	}
+	
 	
 	/*
 	 * JDBC TEMPLATE NAMED PARAMETER
