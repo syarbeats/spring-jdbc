@@ -44,5 +44,15 @@ public class App
         	System.out.println("Salary: "+emp2.getSalary());
         	System.out.println("");
         }
+        
+        /*
+         * Update data using NamedParameter
+         * **/
+        empDao.updateSalary(102, 45000);
+        
+        /*
+         * Create data using JDBC INSERT
+         * **/
+        empDao.addEmployee(104, "Narendra", 37000);
     }
 }
