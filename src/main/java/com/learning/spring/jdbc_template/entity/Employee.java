@@ -8,6 +8,7 @@ public class Employee {
 	private String name;
 	private int salary;
 	private List<Employee> listEmployee;
+	private String working_history;
 	
 	public Employee() {
 		
@@ -44,6 +45,14 @@ public class Employee {
 
 	public void setListEmployee(List<Employee> listEmployee) {
 		this.listEmployee = listEmployee;
+	}
+
+	public String getWorking_history() {
+		return working_history;
+	}
+
+	public void setWorking_history(String working_history) {
+		this.working_history = working_history;
 	}
 	
 }

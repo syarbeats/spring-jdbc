@@ -92,5 +92,18 @@ public class App
 			e.printStackTrace();
 		}
         System.out.println("");
+        
+        /*
+         * Handling Character Large Object using spring jdbc
+         * **/
+        System.out.println("Update Employee Working Summary");
+        System.out.println("===============================");
+        Path path2 = Paths.get("F:\\Data\\JanKoum.txt");
+        try {
+			empDao.updateEmployeWorkingHistory(102, new String(Files.readAllBytes(path)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        System.out.println("");
     }
 }

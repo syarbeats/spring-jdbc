@@ -120,7 +120,7 @@ public class EmployeeDAO {
 	}
 	
 	/*
-	 * Handling binary file in Spring JDBC
+	 * Handling binary file (BLOB) in Spring JDBC
 	 * **/
 	public void updateEmployeePhoto(int id, byte[] photo) {
 		MapSqlParameterSource in = new MapSqlParameterSource();
@@ -133,6 +133,19 @@ public class EmployeeDAO {
 		System.out.println("Photo for employee with id:"+id+" has been updated...");
 	}
 	
+	/*
+	 * Handling Character Large Object (CLOB) in Spring JDBC
+	 * **/
+	public void updateEmployeWorkingHistory(int id, String workingHistory) {
+		MapSqlParameterSource in = new MapSqlParameterSource();
+		in.addValue("id", id);
+		in.addValue("working_history", new SqlLobValue(workingHistory, new DefaultLobHandler()), Types.CLOB);
+		
+		String sql = "update Employee set working_history = :working_history where id = :id";
+		NamedParameterJdbcTemplate jdbcNamedTemplate = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());
+		jdbcNamedTemplate.update(sql, in);
+		System.out.println("Working History for employee with id:"+id+" has been updated...");
+	}
 	
 	public int deleteEmployee(Employee emp) {
 		String query="delete from employee where id="+emp.getId();
