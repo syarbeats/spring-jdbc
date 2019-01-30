@@ -69,5 +69,10 @@ public class App
         	System.out.println("Salary: "+emp3.getSalary());
         	System.out.println("");
         }
+        
+        System.out.println("Call MYSQL STORE PROCEDURE USING STORE PROCEDURE CLASS");
+        System.out.println("======================================================");
+        System.out.println("Employee Count: "+empDao.getEmployeeCount());
+        
     }
 }

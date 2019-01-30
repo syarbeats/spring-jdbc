@@ -17,6 +17,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.learning.spring.jdbc_template.EmployeeMapper;
 import com.learning.spring.jdbc_template.EmployeeResultSetExtractor;
+import com.learning.spring.jdbc_template.EmployeeStoreProcedure;
 import com.learning.spring.jdbc_template.entity.Employee;
 
 public class EmployeeDAO {
@@ -91,6 +92,15 @@ public class EmployeeDAO {
 		return (List<Employee>) queryData.get("emp");
 	}
 	
+	/*
+	 * SPRING STOREDPROCEDUE CLASS
+	 * **/
+	public int getEmployeeCount(){
+		
+		EmployeeStoreProcedure storeProcedure= new EmployeeStoreProcedure(jdbcTemplate.getDataSource(), "getEmployeeCount"); 
+		
+		return storeProcedure.execute();
+	}
 	
 	/*
 	 * JDBC TEMPLATE NAMED PARAMETER
