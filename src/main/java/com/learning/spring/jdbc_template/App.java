@@ -1,5 +1,10 @@
 package com.learning.spring.jdbc_template;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -73,6 +78,19 @@ public class App
         System.out.println("Call MYSQL STORE PROCEDURE USING STORE PROCEDURE CLASS");
         System.out.println("======================================================");
         System.out.println("Employee Count: "+empDao.getEmployeeCount());
+        System.out.println("");
         
+        /*
+         * Handling binary file using spring jdbc
+         * **/
+        System.out.println("Update Employee Photo");
+        System.out.println("=====================");
+        Path path = Paths.get("F:\\Data\\Rief.PNG");
+        try {
+			empDao.updateEmployeePhoto(102, Files.readAllBytes(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        System.out.println("");
     }
 }

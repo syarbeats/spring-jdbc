@@ -1,7 +1,9 @@
 package com.learning.spring.jdbc_template.dao;
 
+import java.io.ByteArrayInputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.core.support.SqlLobValue;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
 
 import com.learning.spring.jdbc_template.EmployeeMapper;
 import com.learning.spring.jdbc_template.EmployeeResultSetExtractor;
@@ -114,6 +118,21 @@ public class EmployeeDAO {
 		jdbcNamedTemplate.update(query, in);
 		System.out.println("Record updated with id="+employeeId);
 	}
+	
+	/*
+	 * Handling binary file in Spring JDBC
+	 * **/
+	public void updateEmployeePhoto(int id, byte[] photo) {
+		MapSqlParameterSource in = new MapSqlParameterSource();
+		in.addValue("id", id);
+		in.addValue("photo", new SqlLobValue(new ByteArrayInputStream(photo), photo.length, new DefaultLobHandler()), Types.BLOB);
+		
+		String sql = "update Employee set photo = :photo where id = :id";
+		NamedParameterJdbcTemplate jdbcNamedTemplate = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());
+		jdbcNamedTemplate.update(sql, in);
+		System.out.println("Photo for employee with id:"+id+" has been updated...");
+	}
+	
 	
 	public int deleteEmployee(Employee emp) {
 		String query="delete from employee where id="+emp.getId();
