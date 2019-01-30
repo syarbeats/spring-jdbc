@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -145,6 +146,41 @@ public class EmployeeDAO {
 		NamedParameterJdbcTemplate jdbcNamedTemplate = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());
 		jdbcNamedTemplate.update(sql, in);
 		System.out.println("Working History for employee with id:"+id+" has been updated...");
+	}
+	
+	/*
+	 * BATCH UPDATE IN SPRING JDBC
+	 * **/
+	public void batchUpdateEmployee(List<Employee> emp) {
+		String sql = "update Employee set salary = ? where id = ?";
+		
+		try {
+				int[] updateCounts = jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter(){
+
+					@Override
+					public int getBatchSize() {
+						
+						return emp.size();
+					}
+	
+					@Override
+					public void setValues(PreparedStatement ps, int i) throws SQLException {
+						ps.setInt(1, emp.get(i).getSalary());
+						ps.setInt(2, emp.get(i).getId());
+						
+					}
+					
+				});
+				System.out.println("Batch update was done succesfully...");
+				return;
+				
+		}catch(Exception e) {
+			System.out.println("Batch update was failed...");
+			e.printStackTrace();
+			return;
+		}
+		
+		
 	}
 	
 	public int deleteEmployee(Employee emp) {

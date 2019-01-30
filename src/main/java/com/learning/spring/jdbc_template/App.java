@@ -1,10 +1,10 @@
 package com.learning.spring.jdbc_template;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -106,5 +106,30 @@ public class App
 			e.printStackTrace();
 		}
         System.out.println("");
+        
+        /*
+         * BATCH UPDATE IN SPRING JDBC
+         * **/
+        System.out.println("Employee Batch Update");
+        System.out.println("====================");
+        Employee emp1 = new Employee();
+        emp1.setId(102);
+        emp1.setSalary(55000);
+        
+        Employee emp2 = new Employee();
+        emp2.setId(103);
+        emp2.setSalary(65000);
+        
+        Employee emp3 = new Employee();
+        emp3.setId(104);
+        emp3.setSalary(75000);
+        
+        List<Employee> empList = new ArrayList<Employee>();
+        empList.add(emp1);
+        empList.add(emp2);
+        empList.add(emp3);
+        
+        empDao.batchUpdateEmployee(empList);
+        
     }
 }
