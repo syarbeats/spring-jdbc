@@ -34,8 +34,9 @@ public class App
         	System.out.println("");
         }
         
-        List<Employee> emp = empDao.getEmployeeData(102);
+        List<Employee> emp = empDao.getEmployeeData(104);
         System.out.println("Name: "+ emp.get(0).getName());
+        System.out.println("Working Hstory: "+ emp.get(0).getWorking_history());
         System.out.println("");
         
         /*
@@ -100,7 +101,7 @@ public class App
         System.out.println("===============================");
         Path path2 = Paths.get("F:\\Data\\JanKoum.txt");
         try {
-			empDao.updateEmployeWorkingHistory(102, new String(Files.readAllBytes(path)));
+			empDao.updateEmployeWorkingHistory(104, new String(Files.readAllBytes(path2)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
